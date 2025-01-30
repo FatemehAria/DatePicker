@@ -81,18 +81,9 @@ export class AppComponent {
           return str.replace(/\d/g, (d: any) => arabicDigits[d]);
         }
 
-        // Convert the lunar date string to Arabic numerals
         const arabicFormattedDate = toArabicNumerals(lunarDateStr);
 
         console.log(arabicFormattedDate);
-        // تبدیل تاریخ میلادی به هجری اسلامی با استفاده از Intl.DateTimeFormat
-        // let hijriFormatter = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
-        //   day: 'numeric',
-        //   month: 'long',
-        //   year: 'numeric',
-        // });
-
-        // let hijriDate = hijriFormatter.format(date);
 
         this.frmGuestUser.get('permitDate')?.setValue(hijriDate);
         console.log('Gregorian to Lunar (Hijri):', hijriDate);
@@ -110,51 +101,6 @@ export class AppComponent {
         this.frmGuestUser.get('permitDate')?.setValue(solarDate);
         console.log('lunar to solar', solarDate);
       }
-      //  else {
-      //   // حذف کاراکتر "هـ" از تاریخ هجری قمری
-      //   let hijriDateStr = this.frmGuestUser.get('permitDate')?.value;
-      //   // بررسی اینکه hijriDateStr یک رشته معتبر است
-      //   if (typeof hijriDateStr === 'string') {
-      //     hijriDateStr = hijriDateStr.replace('هـ', '').trim();
-      //     // console.log(hijriDateStr);
-      //   } else {
-      //     // حذف کاراکتر "هـ" از تاریخ هجری قمری
-      //     let hijriDateStr = this.frmGuestUser.get('permitDate')?.value;
-
-      //     // بررسی اینکه hijriDateStr یک رشته معتبر است
-      //     if (typeof hijriDateStr === 'string') {
-      //       hijriDateStr = hijriDateStr.replace('هـ', '').trim();
-      //     } else {
-      //       console.error('The provided date is not a valid string.');
-      //       return;
-      //     }
-
-      //     // بررسی اینکه تاریخ هجری قمری به درستی وارد شده
-      //     console.log('Hijri Date:', hijriDateStr); // نمایش تاریخ هجری قمری وارد شده
-
-      //     // تبدیل تاریخ هجری قمری به میلادی
-      //     const gregorianDate = momentHijri(
-      //       hijriDateStr,
-      //       'iD iMMMM iYYYY',
-      //       true
-      //     ).format('YYYY/MM/DD');
-      //     console.log('Gregorian Date:', gregorianDate); // نمایش تاریخ میلادی
-
-      //     // بررسی اینکه تاریخ میلادی معتبر است یا نه
-      //     if (gregorianDate !== 'Invalid date') {
-      //       // حالا تبدیل تاریخ میلادی به شمسی
-      //       const solarDate = moment(gregorianDate, 'YYYY/MM/DD')
-      //         .locale('fa')
-      //         .format('jYYYY/jMM/jDD');
-      //       console.log('Hijri to Solar:', solarDate);
-
-      //       // نمایش تاریخ شمسی در فرم
-      //       this.frmGuestUser.get('permitDate')?.setValue(solarDate);
-      //     } else {
-      //       console.log('Invalid Hijri date');
-      //     }
-      //   }
-      // }
     }
 
     this.currentCalendar =
