@@ -1,13 +1,20 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Calendar</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
-<body>
-  <app-root></app-root>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Calendar</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  </head>
+  <body>
+    <script src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
+    <script src="https://raw.githubusercontent.com/xsoh/moment-hijri/master/moment-hijri.js"></script>
+    <app-root></app-root>
+    <script>
+      moment.locale('ar-SA');// 2- Set the global locale to `ar-SA`
+      m = moment();
+      m.format('iYYYY/iM/iDهـ الموافق YYYY/M/Dم');
+    </script>
+  </body>
 </html>
