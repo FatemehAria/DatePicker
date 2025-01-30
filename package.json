@@ -10,7 +10,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^19.0.0",
+    "@angular/cdk": "^19.1.2",
     "@angular/common": "^19.0.0",
     "@angular/compiler": "^19.0.0",
     "@angular/core": "^19.0.0",
@@ -21,7 +21,6 @@
     "@maskito/angular": "^3.2.1",
     "@maskito/core": "^3.2.1",
     "@types/moment-hijri": "^2.1.4",
-    "bootstrap": "^5.3.3",
     "jalali-ts": "^8.0.0",
     "maskito": "^0.0.2",
     "moment": "^2.30.1",

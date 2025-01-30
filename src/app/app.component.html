@@ -1,20 +1,31 @@
 <div>
   <form [formGroup]="frmGuestUser">
     <div>
-      <div>
-        <div>
-          <label>تاریخ مجوز</label>
-          <div>
-            <label for="permitDate">Enter Date</label>
-            <input
-              type="text"
-              formControlName="permitDate"
-              placeholder="Enter Date"
-            />
-            <button (click)="toggleCalendar()">Toggle Calendar</button>
-          </div>
-        </div>
-      </div>
+      <label>تاریخ مجوز</label>
+      <!-- <ng-persian-datepicker
+        [calendarIsGregorian]="true"
+        *ngIf="currentCalendar === 'gregorian'"
+      >
+        <input
+          type="text"
+          formControlName="permitDate"
+          placeholder="Enter Date"
+        />
+      </ng-persian-datepicker>
+      <ng-persian-datepicker
+        [calendarIsGregorian]="false"
+        *ngIf="currentCalendar === 'solar'"
+      >
+        <input
+          type="text"
+          formControlName="permitDate"
+          placeholder="Enter Date"
+        />
+      </ng-persian-datepicker> -->
+
+      <ngb-datepicker #dp [firstDayOfWeek]="6" />
+
+      <button (click)="toggleCalendar()">Toggle Calendar</button>
     </div>
   </form>
 </div>

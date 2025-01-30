@@ -10,17 +10,38 @@ import { MaskitoDirective } from '@maskito/angular';
 import { CommonModule } from '@angular/common';
 import moment from 'moment-jalaali';
 import momentHijri from 'moment-hijri';
+import {
+  NgbCalendar,
+  NgbCalendarPersian,
+  NgbDatepickerI18n,
+  NgbDatepickerModule,
+  NgbDateStruct,
+  NgbPaginationModule,
+} from '@ng-bootstrap/ng-bootstrap';
+
+// import { MatDatepickerModule } from '@angular/material/datepicker';
+// import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+// import { provideNativeDateAdapter } from '@angular/material/core';
+// import {MatInputModule} from '@angular/material/input';
 
 @Component({
   selector: 'app-root',
   imports: [
+    NgPersianDatepickerModule,
     ReactiveFormsModule,
     NgPersianDatepickerModule,
     MaskitoDirective,
     CommonModule,
+    NgbPaginationModule,
+    NgbDatepickerModule
+    // MatFormFieldModule,
+    // MatInputModule,
+    // MatDatepickerModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
+  providers: [{ provide: NgbCalendar, useClass: NgbCalendarPersian }],
+  // providers: [provideNativeDateAdapter()],
 })
 export class AppComponent {
   dateMask = [/\d/, /\d/, /\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/];
@@ -35,12 +56,12 @@ export class AppComponent {
 
   toggleCalendar() {
     const currentDateValue = this.frmGuestUser.get('permitDate')?.value;
-    // console.log('currentDateValue', currentDateValue);
+
+    console.log('currentDateValue', currentDateValue);
     if (currentDateValue) {
       const [year, month, day] = currentDateValue.split('/').map(Number);
 
       if (this.currentCalendar === 'solar') {
-        // Convert from Solar to Gregorian
         const gregorianDate = moment(
           `${year}/${month}/${day}`,
           'jYYYY/jMM/jDD'
@@ -49,7 +70,6 @@ export class AppComponent {
         console.log('solar to gregorian', gregorianDate);
         console.log('solar to gregorian', this.currentCalendar);
       } else if (this.currentCalendar === 'gregorian') {
-        // تبدیل به تاریخ قمری عددی
         let hijriDate = momentHijri(
           `${year}/${month}/${day}`,
           'YYYY/MM/DD'
