@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Component, inject, Injectable } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   UntypedFormGroup,
   UntypedFormControl,
@@ -16,31 +16,60 @@ import {
   NgbDatepickerI18n,
   NgbDatepickerModule,
   NgbDateStruct,
-  NgbPaginationModule,
 } from '@ng-bootstrap/ng-bootstrap';
 
 // import { MatDatepickerModule } from '@angular/material/datepicker';
 // import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 // import { provideNativeDateAdapter } from '@angular/material/core';
 // import {MatInputModule} from '@angular/material/input';
+const WEEKDAYS_SHORT = ['د', 'س', 'چ', 'پ', 'ج', 'ش', 'ی'];
+const MONTHS = [
+  'فروردین',
+  'اردیبهشت',
+  'خرداد',
+  'تیر',
+  'مرداد',
+  'شهریور',
+  'مهر',
+  'آبان',
+  'آذر',
+  'دی',
+  'بهمن',
+  'اسفند',
+];
+
+@Injectable({ providedIn: 'root' })
+export class NgbDatepickerI18nPersian extends NgbDatepickerI18n {
+  getWeekdayLabel(weekday: number) {
+    return WEEKDAYS_SHORT[weekday - 1];
+  }
+  getMonthShortName(month: number) {
+    return MONTHS[month - 1];
+  }
+  getMonthFullName(month: number) {
+    return MONTHS[month - 1];
+  }
+  getDayAriaLabel(date: NgbDateStruct): string {
+    return `${date.year}-${this.getMonthFullName(date.month)}-${date.day}`;
+  }
+}
 
 @Component({
   selector: 'app-root',
   imports: [
     NgPersianDatepickerModule,
     ReactiveFormsModule,
-    NgPersianDatepickerModule,
     MaskitoDirective,
     CommonModule,
-    NgbPaginationModule,
-    NgbDatepickerModule
-    // MatFormFieldModule,
-    // MatInputModule,
-    // MatDatepickerModule,
+    NgbDatepickerModule,
+    FormsModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  providers: [{ provide: NgbCalendar, useClass: NgbCalendarPersian }],
+  providers: [
+    { provide: NgbCalendar, useClass: NgbCalendarPersian },
+    { provide: NgbDatepickerI18n, useClass: NgbDatepickerI18nPersian },
+  ],
   // providers: [provideNativeDateAdapter()],
 })
 export class AppComponent {
@@ -48,10 +77,22 @@ export class AppComponent {
   currentCalendar: 'solar' | 'gregorian' | 'lunar' = 'solar';
   frmGuestUser: any;
 
+  today = inject(NgbCalendar).getToday();
+  model!: NgbDateStruct;
+  date!: { year: number; month: number };
+
   ngOnInit(): void {
     this.frmGuestUser = new UntypedFormGroup({
       permitDate: new UntypedFormControl('', [Validators.required]),
     });
+  }
+
+  onDateSelect(date: NgbDateStruct) {
+    if (date) {
+      const formattedDate = `${date.year}/${date.month}/${date.day}`;
+      this.frmGuestUser.get('permitDate')?.setValue(formattedDate);
+      console.log('Selected Date:', formattedDate);
+    }
   }
 
   toggleCalendar() {

@@ -23,7 +23,12 @@
         />
       </ng-persian-datepicker> -->
 
-      <ngb-datepicker #dp [firstDayOfWeek]="6" />
+      <ngb-datepicker
+        #dp
+        [firstDayOfWeek]="6"
+        (dateSelect)="onDateSelect($event)"
+      >
+      </ngb-datepicker>
 
       <button (click)="toggleCalendar()">Toggle Calendar</button>
     </div>
