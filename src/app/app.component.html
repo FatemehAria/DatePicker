@@ -2,33 +2,33 @@
   <form [formGroup]="frmGuestUser">
     <div>
       <label>تاریخ مجوز</label>
-      <!-- <ng-persian-datepicker
-        [calendarIsGregorian]="true"
-        *ngIf="currentCalendar === 'gregorian'"
-      >
-        <input
-          type="text"
-          formControlName="permitDate"
-          placeholder="Enter Date"
-        />
-      </ng-persian-datepicker>
-      <ng-persian-datepicker
-        [calendarIsGregorian]="false"
-        *ngIf="currentCalendar === 'solar'"
-      >
-        <input
-          type="text"
-          formControlName="permitDate"
-          placeholder="Enter Date"
-        />
-      </ng-persian-datepicker> -->
 
+      <!-- Persian (Solar) Datepicker -->
       <ngb-datepicker
         #dp
         [firstDayOfWeek]="6"
         (dateSelect)="onDateSelect($event)"
       >
       </ngb-datepicker>
+
+      <!-- Gregorian Datepicker -->
+      <!-- <ngb-datepicker
+        #dp
+        [firstDayOfWeek]="7"
+        (dateSelect)="onDateSelect($event)"
+        *ngIf="currentCalendar === 'gregorian'"
+      >
+      </ngb-datepicker> -->
+
+      <!-- Islamic (Lunar) Datepicker -->
+      <!-- <ngb-datepicker
+        #dp
+        [firstDayOfWeek]="7"
+        class="rtl"
+        (dateSelect)="onDateSelect($event)"
+        *ngIf="currentCalendar === 'lunar'"
+      >
+      </ngb-datepicker> -->
 
       <button (click)="toggleCalendar()">Toggle Calendar</button>
     </div>
