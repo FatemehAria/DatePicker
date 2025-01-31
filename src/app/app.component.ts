@@ -20,6 +20,9 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDatepickerI18nPersian } from './services/persian-calendar.service';
 import { IslamicI18n } from './services/islamic-calendar.service';
+import { PersianCalendarComponent } from "./persian-calendar/persian-calendar.component";
+import { GregorianCalendarComponent } from "./gregorian-calendar/gregorian-calendar.component";
+import { IslamicCalendarComponent } from "./islamic-calendar/islamic-calendar.component";
 
 // import { MatDatepickerModule } from '@angular/material/datepicker';
 // import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
@@ -35,26 +38,20 @@ import { IslamicI18n } from './services/islamic-calendar.service';
     CommonModule,
     NgbDatepickerModule,
     FormsModule,
-  ],
+    PersianCalendarComponent,
+    GregorianCalendarComponent,
+    IslamicCalendarComponent
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  providers: [
-    { provide: NgbCalendar, useClass: NgbCalendarPersian },
-    { provide: NgbDatepickerI18n, useClass: NgbDatepickerI18nPersian },
-    NgbCalendarPersian,
-    { provide: NgbCalendar, useClass: NgbCalendarIslamicCivil },
-    { provide: NgbDatepickerI18n, useClass: IslamicI18n },
-    NgbCalendarIslamicCivil,
-  ],
-  // providers: [provideNativeDateAdapter()],
 })
 export class AppComponent {
   dateMask = [/\d/, /\d/, /\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/];
-  currentCalendar: 'solar' | 'gregorian' | 'lunar' = 'lunar';
+  currentCalendar: 'solar' | 'gregorian' | 'lunar' = 'solar';
   frmGuestUser: any;
 
   today = inject(NgbCalendar).getToday();
-  model!: NgbDateStruct;
+  model!: NgbDateStruct; // Shared model
   date!: { year: number; month: number };
 
   ngOnInit(): void {
@@ -62,12 +59,12 @@ export class AppComponent {
       permitDate: new UntypedFormControl('', [Validators.required]),
     });
   }
+
   onDateSelect(date: NgbDateStruct) {
-    if (date) {
-      const formattedDate = `${date.year}/${date.month}/${date.day}`;
-      this.frmGuestUser.get('permitDate')?.setValue(formattedDate);
-      console.log('Selected Date:', formattedDate);
-    }
+    this.model = date; // Update model
+    const formattedDate = `${date.year}/${date.month}/${date.day}`;
+    this.frmGuestUser.get('permitDate')?.setValue(formattedDate);
+    console.log('Selected Date:', formattedDate);
   }
 
   toggleCalendar() {

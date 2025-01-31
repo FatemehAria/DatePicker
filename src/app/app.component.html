@@ -3,32 +3,23 @@
     <div>
       <label>تاریخ مجوز</label>
 
-      <!-- Persian (Solar) Datepicker -->
-      <ngb-datepicker
-        #dp
-        [firstDayOfWeek]="6"
-        (dateSelect)="onDateSelect($event)"
-      >
-      </ngb-datepicker>
+      <app-persian-calendar
+        *ngIf="currentCalendar === 'solar'"
+        [(model)]="model"
+        (modelChange)="onDateSelect($event)"
+      ></app-persian-calendar>
 
-      <!-- Gregorian Datepicker -->
-      <!-- <ngb-datepicker
-        #dp
-        [firstDayOfWeek]="7"
-        (dateSelect)="onDateSelect($event)"
+      <app-gregorian-calendar
         *ngIf="currentCalendar === 'gregorian'"
-      >
-      </ngb-datepicker> -->
+        [(model)]="model"
+        (modelChange)="onDateSelect($event)"
+      ></app-gregorian-calendar>
 
-      <!-- Islamic (Lunar) Datepicker -->
-      <!-- <ngb-datepicker
-        #dp
-        [firstDayOfWeek]="7"
-        class="rtl"
-        (dateSelect)="onDateSelect($event)"
+      <app-islamic-calendar
         *ngIf="currentCalendar === 'lunar'"
-      >
-      </ngb-datepicker> -->
+        [(model)]="model"
+        (modelChange)="onDateSelect($event)"
+      ></app-islamic-calendar>
 
       <button (click)="toggleCalendar()">Toggle Calendar</button>
     </div>
