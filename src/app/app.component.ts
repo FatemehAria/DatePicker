@@ -12,29 +12,18 @@ import moment from 'moment-jalaali';
 import momentHijri from 'moment-hijri';
 import {
   NgbCalendar,
-  NgbCalendarIslamicCivil,
-  NgbCalendarPersian,
-  NgbDatepickerI18n,
   NgbDatepickerModule,
   NgbDateStruct,
 } from '@ng-bootstrap/ng-bootstrap';
-import { NgbDatepickerI18nPersian } from './services/persian-calendar.service';
-import { IslamicI18n } from './services/islamic-calendar.service';
 import { PersianCalendarComponent } from './persian-calendar/persian-calendar.component';
 import { GregorianCalendarComponent } from './gregorian-calendar/gregorian-calendar.component';
 import { IslamicCalendarComponent } from './islamic-calendar/islamic-calendar.component';
-
-// import { MatDatepickerModule } from '@angular/material/datepicker';
-// import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
-// import { provideNativeDateAdapter } from '@angular/material/core';
-// import {MatInputModule} from '@angular/material/input';
 
 @Component({
   selector: 'app-root',
   imports: [
     NgPersianDatepickerModule,
     ReactiveFormsModule,
-    MaskitoDirective,
     CommonModule,
     NgbDatepickerModule,
     FormsModule,
@@ -61,10 +50,10 @@ export class AppComponent {
   }
 
   onDateSelect(date: NgbDateStruct) {
-    this.model = date; // Update model
+    this.model = date;
     const formattedDate = `${date.year}/${date.month}/${date.day}`;
     this.frmGuestUser.get('permitDate')?.setValue(formattedDate);
-    console.log('Selected Date:', formattedDate);
+    // console.log('Selected Date:', formattedDate);
   }
 
   toggleCalendar() {
@@ -80,56 +69,26 @@ export class AppComponent {
           'jYYYY/jMM/jDD'
         ).format('YYYY/MM/DD');
         this.frmGuestUser.get('permitDate')?.setValue(gregorianDate);
-        const [gYear, gMonth, gDay] = gregorianDate.split('/').map(Number);
 
-        // Update the model for the Gregorian calendar component
+        const [gYear, gMonth, gDay] = gregorianDate.split('/').map(Number);
         this.model = { year: gYear, month: gMonth, day: gDay };
 
         console.log('solar to gregorian', gregorianDate);
-        console.log('solar to gregorian', this.currentCalendar);
+        // console.log('solar to gregorian', this.currentCalendar);
+
       } else if (this.currentCalendar === 'gregorian') {
         let hijriDate = momentHijri(
           `${year}/${month}/${day}`,
           'YYYY/MM/DD'
         ).format('iYYYY/iMM/iDD');
 
-        let splittedDate = hijriDate.split('/');
-        let splitedDateYear = +splittedDate[0];
-        let splitedDateMonth = +splittedDate[1];
-        let splitedDateDay = +splittedDate[2];
-        // console.log(splitedDateYear);
-        let lunarDateStr = momentHijri()
-          .iDate(splitedDateDay)
-          .iMonth(splitedDateMonth)
-          .iYear(splitedDateYear)
-          .format('iD iMMMM iYYYY');
-        function toArabicNumerals(str: string) {
-          const arabicDigits = [
-            '٠',
-            '١',
-            '٢',
-            '٣',
-            '٤',
-            '٥',
-            '٦',
-            '٧',
-            '٨',
-            '٩',
-          ];
-          return str.replace(/\d/g, (d: any) => arabicDigits[d]);
-        }
-
-        const arabicFormattedDate = toArabicNumerals(lunarDateStr);
-
-        console.log(arabicFormattedDate);
-
         this.frmGuestUser.get('permitDate')?.setValue(hijriDate);
-        const [gYear, gMonth, gDay] = hijriDate.split('/').map(Number);
 
-        // Update the model for the Gregorian calendar component
-        this.model = { year: gYear, month: gMonth, day: gDay };
+        const [iYear, iMonth, iDay] = hijriDate.split('/').map(Number);
+        this.model = { year: iYear, month: iMonth, day: iDay };
+
         console.log('Gregorian to Lunar (Hijri):', hijriDate);
-        console.log('Gregorian to Lunar (Hijri):', hijriDate);
+        // console.log('Gregorian to Lunar (Hijri):', hijriDate);
       } else {
         const gregorianFromHijri = momentHijri(
           `${year}/${month}/${day}`,
@@ -141,10 +100,10 @@ export class AppComponent {
         );
 
         this.frmGuestUser.get('permitDate')?.setValue(solarDate);
-        const [gYear, gMonth, gDay] = solarDate.split('/').map(Number);
 
-        // Update the model for the Gregorian calendar component
+        const [gYear, gMonth, gDay] = solarDate.split('/').map(Number);
         this.model = { year: gYear, month: gMonth, day: gDay };
+        
         console.log('lunar to solar', solarDate);
       }
     }
