@@ -23,5 +23,29 @@
 
       <button (click)="toggleCalendar()">Toggle Calendar</button>
     </div>
+
+    <div>
+      <label>تاریخ دو</label>
+
+      <app-persian-calendar
+        *ngIf="currentCalendar === 'solar'"
+        [(model)]="model"
+        (modelChange)="onDateSelect($event)"
+      ></app-persian-calendar>
+
+      <app-gregorian-calendar
+        *ngIf="currentCalendar === 'gregorian'"
+        [(model)]="model"
+        (modelChange)="onDateSelect($event)"
+      ></app-gregorian-calendar>
+
+      <app-islamic-calendar
+        *ngIf="currentCalendar === 'lunar'"
+        [(model)]="model"
+        (modelChange)="onDateSelect($event)"
+      ></app-islamic-calendar>
+
+      <button (click)="toggleCalendar()">Toggle Calendar</button>
+    </div>
   </form>
 </div>

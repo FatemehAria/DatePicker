@@ -1,6 +1,24 @@
-<ngb-datepicker
+<div class="col-12">
+  <div class="input-group">
+    <input
+      class="form-control"
+      placeholder="yyyy-mm-dd"
+      name="dp"
+      ngbDatepicker
+      #d="ngbDatepicker"
+      [(ngModel)]="model"
+      (ngModelChange)="onDateChange($event)"
+    />
+    <button
+      class="btn btn-outline-secondary bi bi-calendar3"
+      (click)="d.toggle()"
+      type="button"
+    ></button>
+  </div>
+  <!-- <ngb-datepicker
   #dp
   [(ngModel)]="model"
   [firstDayOfWeek]="6"
   (ngModelChange)="onDateChange($event)"
-/>
+/> -->
+</div>
